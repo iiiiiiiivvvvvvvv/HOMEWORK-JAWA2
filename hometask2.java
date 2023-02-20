@@ -1,53 +1,37 @@
+// Пусть дан произвольный список целых чисел. Удалить из него чётные числа.
 
-import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+
 public class hometask2 {
-    public static int[] randomArr() {
-        Random rand = new Random();
-        int arr[] = new int[10];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = rand.nextInt(100);
-            System.out.print(arr[i] + " ");
+
+    public static List<Integer> getRandomList() {
+        Random random = new Random();
+        int size = 20;
+        List<Integer> list = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            list.add(random.nextInt(100));
         }
-        System.out.println("");
-        return arr;
+        System.out.println(list.toString());
+        return list;
     }
 
-    public static int[] babblSort(int arr[]) throws IOException {
-        Logger loger = Logger.getLogger(hometask2.class.getName());
-        FileHandler fHandler = new FileHandler("Task2_2.txt");
-        SimpleFormatter sFormatter = new SimpleFormatter();
-        fHandler.setFormatter(sFormatter);
-        loger.addHandler(fHandler);
+    public static List<Integer> deletEvenNum(List<Integer> list) {
 
-        int temp;
-        for (int i = arr.length - 1; i >= 0; i--) {
-            for (int j = 0; j < arr.length - 1; j++) {
-                if (arr[j] < arr[j + 1]) {
-                    temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                }
+        for (Iterator<Integer> iterator = list.iterator(); iterator.hasNext();) {
+            Integer number = iterator.next();
+            if (number % 2 == 0) {
+                iterator.remove();
             }
 
-            loger.info(Arrays.toString(arr));
         }
-        return arr;
-
+        System.out.println(list.toString());
+        return list;
     }
 
-    public static void print(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + " ");
-        }
+    public static void main(String[] args) {
+        deletEvenNum(getRandomList());
     }
-
-    public static void main(String[] args) throws IOException {
-
-        print(babblSort(randomArr()));
-    } 
 }
